@@ -2,9 +2,11 @@
 
 use ItemVenda\ItemVenda;
 use Venda\Venda;
+use VendaException\VendaException;
 
+require_once "VendaException.php";
 require_once "Venda.php";
-require_once "ItemVenda";
+require_once "ItemVenda.php";
 
 try {
     $camisa = new ItemVenda();
@@ -16,12 +18,12 @@ try {
     $bone->setPreco(11.0);
 
     $Venda = new Venda();
-    $Venda->adicionar(null);
+    $Venda->adicionar($camisa);
     $Venda->adicionar($bone);
 
     print "Total da venda: "  . $Venda->getTotal();
-} catch (InvalidArgumentException $e) {
-    echo "Um erro aconteceu: " . $e->getMessage();
-} catch (LogicEception $e){
-    echo "Erro: " . $e->getMessage();
+} catch (VendaException $e) {
+    echo "VendaException: " . $e->getMessage() . " -Código: " . $e->getCodigo();    
+} finally {
+    echo "\nProcessamento encerrado";
 }
